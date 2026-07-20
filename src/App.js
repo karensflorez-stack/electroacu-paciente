@@ -120,17 +120,22 @@ function HandDiagram({ selectedPoints = [] }) {
 
 export default function App() {
   const [sessions, setSessions] = useState([]);
+  
   useEffect(() => {
-  const fetchCount = async () => {
-    const { count } = await supabase
+  const fetchSessions = async () => {
+    const { data, error } = await supabase
       .from("sesiones")
-      .select("*", { count: "exact", head: true });
+      .select("*")
+      .order("created_at", { ascending: true });
 
-    setSessions(Array(count || 0).fill({}));
+    if (!error) {
+      setSessions(data || []);
+    }
   };
 
-  fetchCount();
+  fetchSessions();
 }, []);
+
   const [step, setStep] = useState("home");
   const [form, setForm] = useState({
     mano: "Derecha",
