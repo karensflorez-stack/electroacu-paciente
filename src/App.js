@@ -39,16 +39,6 @@ const SINTOMAS_STC = [
 
 const STORAGE_KEY = "electroacu_sesiones";
 
-function loadSessions() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
-}
-
-function saveSessions(sessions) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-}
 
 function Card({ children, style = {} }) {
   return (
@@ -129,7 +119,18 @@ function HandDiagram({ selectedPoints = [] }) {
 }
 
 export default function App() {
-  const [sessions, setSessions] = useState(loadSessions);
+  const [sessions, setSessions] = useState([]);
+  useEffect(() => {
+  const fetchCount = async () => {
+    const { count } = await supabase
+      .from("sesiones")
+      .select("*", { count: "exact", head: true });
+
+    setSessions(Array(count || 0).fill({}));
+  };
+
+  fetchCount();
+}, []);
   const [step, setStep] = useState("home");
   const [form, setForm] = useState({
     mano: "Derecha",
