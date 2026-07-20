@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { supabase } from "./supabase";
 
 const C = {
   bg: "#F2F5F9", surface: "#FFFFFF",
@@ -149,20 +150,46 @@ export default function App() {
     ...f, [field]: f[field].includes(id) ? f[field].filter(s => s !== id) : [...f[field], id]
   }));
 
-  const handleSubmit = () => {
-    const now = new Date();
-    const session = {
-      id: Date.now(),
-      date: now.toISOString().split("T")[0],
-      time: now.toTimeString().slice(0, 5),
-      paciente: "Ana Gómez",
-      ...form,
-    };
-    const updated = [...sessions, session];
-    setSessions(updated);
-    saveSessions(updated);
-    setStep("done");
+const handleSubmit = async () => {
+  const now = new Date();
+
+  const session = {
+    paciente: "Ana Gómez",
+
+    fecha: now.toISOString().split("T")[0],
+    hora: now.toTimeString().slice(0, 5),
+
+    mano: form.mano,
+
+    frecuencia_hz: form.frecuencia_hz,
+    intensidad_ma: form.intensidad_ma,
+    duracion_min: form.duracion_min,
+
+    dolor_eva_antes: form.dolor_eva_antes,
+    dolor_eva_despues: form.dolor_eva_despues,
+
+    sintomas_antes: form.sintomas_antes,
+    sintomas_despues: form.sintomas_despues,
+
+    puntos_usados: form.puntos_usados,
+
+    efecto_adverso: form.efecto_adverso,
+    notas: form.notas
   };
+
+  const { error } = await supabase
+    .from("sesiones")
+    .insert([session]);
+
+  if (error) {
+    console.error(error);
+    alert("Error enviando la sesión");
+    return;
+  }
+
+  alert("Sesión enviada correctamente");
+  setStep("done");
+};
 
   const resetForm = () => {
     setForm({ mano: "Derecha", puntos_usados: ["PC7","PC6","IG4"], frecuencia_hz: 2, intensidad_ma: 3, duracion_min: 20, dolor_eva_antes: 5, dolor_eva_despues: 3, sintomas_antes: [], sintomas_despues: [], efecto_adverso: "Ninguno", notas: "" });
