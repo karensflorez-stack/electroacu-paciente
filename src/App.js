@@ -20,10 +20,6 @@ const PUNTOS_QI = [
     ubicacion: "Dorso de la mano, mitad del 2° metacarpiano, borde radial" },
   { codigo: "TR5", nombre: "Waiguan", meridiano: "Triple Recalentador", color: "#C09A1A", emoji: "🟡",
     ubicacion: "2 cun proximal al pliegue dorsal de muñeca, entre cúbito y radio" },
-  { codigo: "P7", nombre: "Lieque", meridiano: "Pulmón", color: "#C05A1A", emoji: "🟠",
-    ubicacion: "1,5 cun proximal al pliegue de muñeca, borde radial" },
-  { codigo: "MC9", nombre: "Zhongchong", meridiano: "Pericardio", color: "#7B2FBE", emoji: "🔵",
-    ubicacion: "Extremo del dedo medio, 0,1 cun del ángulo ungüeal radial" },
 ];
 
 const SINTOMAS_STC = [
@@ -33,7 +29,7 @@ const SINTOMAS_STC = [
   { id: "dolor_irradiado", label: "Dolor irradiado al antebrazo", icon: "💪" },
   { id: "debilidad_agarre", label: "Debilidad al cerrar el puño", icon: "✊" },
   { id: "torpeza_fina", label: "Torpeza motora fina (botones, escritura)", icon: "✍️" },
-  { id: "signo_phalen", label: "Síntomas al doblar la muñeca (Phalen+)", icon: "🔻" },
+  { id: "signo_phalen", label: "Síntomas al doblar la muñeca (Prueba de Phalen)", icon: "🔻" },
   { id: "sensacion_hinchazon", label: "Sensación de hinchazón sin edema visible", icon: "🌡" },
 ];
 
@@ -83,10 +79,9 @@ function SliderField({ label, value, min, max, unit, onChange, color = C.primary
 function HandDiagram({ selectedPoints = [] }) {
   const puntos = {
     PC7: { x: 140, y: 210 }, PC6: { x: 140, y: 175 },
-    P7:  { x: 100, y: 190 }, IG4: { x: 180, y: 135 },
-    TR5: { x: 175, y: 175 }, MC9: { x: 155, y: 60 },
+    IG4: { x: 180, y: 135 }, TR5: { x: 175, y: 175 }, 
   };
-  const colorMap = { PC7: "#7B2FBE", PC6: "#7B2FBE", IG4: "#1A7A4A", TR5: "#C09A1A", P7: "#C05A1A", MC9: "#7B2FBE" };
+  const colorMap = { PC7: "#7B2FBE", PC6: "#7B2FBE", IG4: "#1A7A4A", TR5: "#C09A1A" };
 
   return (
     <svg viewBox="0 0 300 310" style={{ width: "100%", maxWidth: 260, margin: "0 auto", display: "block" }}>
