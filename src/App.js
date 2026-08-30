@@ -365,7 +365,7 @@ const handleSubmit = async () => {
         </p>
         <div style={{ background: "rgba(255,255,255,0.12)", borderRadius: 12, padding: "12px 16px" }}>
           <p style={{ color: "rgba(255,255,255,0.6)", margin: "0 0 4px", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.06em" }}>Protocolo activo</p>
-          <p style={{ color: "#fff", margin: 0, fontSize: 13, fontWeight: 600 }}>PC7 · PC6 · IG4 · TR5 — 2 Hz / 3 mA / 20 min</p>
+          <p style={{ color: "#fff", margin: 0, fontSize: 13, fontWeight: 600 }}>PC7 · PC6 · IG4 · TR5 — 2 Hz / 20 min</p>
         </div>
       </div>
 
