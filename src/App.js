@@ -76,42 +76,6 @@ function SliderField({ label, value, min, max, unit, onChange, color = C.primary
   );
 }
 
-function HandDiagram({ selectedPoints = [] }) {
-  const puntos = {
-    PC7: { x: 140, y: 210 }, PC6: { x: 140, y: 175 },
-    IG4: { x: 180, y: 135 }, TR5: { x: 175, y: 175 }, 
-  };
-  const colorMap = { PC7: "#7B2FBE", PC6: "#7B2FBE", IG4: "#1A7A4A", TR5: "#C09A1A" };
-
-  return (
-    <svg viewBox="0 0 300 310" style={{ width: "100%", maxWidth: 260, margin: "0 auto", display: "block" }}>
-      <ellipse cx="140" cy="175" rx="55" ry="70" fill="#F5EDE3" stroke="#C8A882" strokeWidth="1.5" />
-      <rect x="110" y="235" width="60" height="55" rx="8" fill="#F5EDE3" stroke="#C8A882" strokeWidth="1.5" />
-      {[[105,70,18,95],[95,38,16,90],[120,28,17,95],[145,34,16,88],[168,48,14,78]].map(([x,y,w,h],i) => (
-        <rect key={i} x={x} y={y} width={w} height={h} rx={8} fill="#F5EDE3" stroke="#C8A882" strokeWidth="1.5" />
-      ))}
-      <rect x="110" y="288" width="60" height="18" rx="4" fill="#EADDD0" stroke="#C8A882" strokeWidth="1" />
-      <line x1="140" y1="60" x2="140" y2="290" stroke="#7B2FBE" strokeWidth="1" strokeDasharray="4 3" opacity="0.4" />
-      <line x1="104" y1="100" x2="104" y2="260" stroke="#C05A1A" strokeWidth="1" strokeDasharray="4 3" opacity="0.4" />
-      <line x1="176" y1="105" x2="176" y2="260" stroke="#C09A1A" strokeWidth="1" strokeDasharray="4 3" opacity="0.4" />
-      {Object.entries(puntos).map(([cod, p]) => {
-        const active = selectedPoints.includes(cod);
-        const col = colorMap[cod] || C.primary;
-        return (
-          <g key={cod}>
-            <circle cx={p.x} cy={p.y} r={active ? 11 : 8}
-              fill={active ? col : "#fff"} stroke={col} strokeWidth={active ? 2.5 : 2}
-              style={{ filter: active ? `drop-shadow(0 0 5px ${col}88)` : "none" }} />
-            {active && <circle cx={p.x} cy={p.y} r={5} fill="#fff" opacity={0.6} />}
-            <text x={p.x + 14} y={p.y + 4} fontSize="9"
-              fill={active ? col : C.textMuted} fontWeight={active ? "700" : "400"}>{cod}</text>
-          </g>
-        );
-      })}
-      <text x="10" y="305" fontSize="9" fill={C.textMuted}>Vista palmar</text>
-    </svg>
-  );
-}
 
 export default function App() {
   const [sessions, setSessions] = useState([]);
