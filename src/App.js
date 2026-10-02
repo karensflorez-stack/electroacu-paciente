@@ -197,6 +197,11 @@ export default function App() {
 
         <Card>
           <SectionTitle icon="🔮">Puntos Qi aplicados</SectionTitle>
+          <img 
+            src="https://drive.google.com/file/d/1K6TiRHkUI7-ti2f7o0nevX_O93ex6-iS/view?usp=sharing" 
+            alt="Puntos de tratamiento" 
+            style={{ width: "100%", maxHeight: 260, objectFit: "contain", borderRadius: 8, display: "block", margin: "0 auto" }} 
+          />  
           <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
             {PUNTOS_QI.map(p => (
               <button key={p.codigo} onClick={() => togglePunto(p.codigo)} style={{
