@@ -268,7 +268,7 @@ const handleSubmit = async () => {
 
         <Card>
           <SectionTitle icon="⚡">Parámetros del dispositivo</SectionTitle>
-          <SliderField label="Frecuencia" value={form.frecuencia_hz} min={1} max={50} unit=" Hz"
+          <SliderField label="Frecuencia" value={form.frecuencia_hz} min={1} max={25} unit=" Hz"
             onChange={v => setForm(f => ({ ...f, frecuencia_hz: v }))} color={C.accent} />
           <SliderField label="Duración" value={form.duracion_min} min={5} max={20} unit=" min"
             onChange={v => setForm(f => ({ ...f, duracion_min: v }))} color={C.green} />
