@@ -33,9 +33,6 @@ const SINTOMAS_STC = [
   { id: "sensacion_hinchazon", label: "Sensación de hinchazón sin edema visible", icon: "🌡" },
 ];
 
-const STORAGE_KEY = "electroacu_sesiones";
-
-
 function Card({ children, style = {} }) {
   return (
     <div style={{
@@ -76,24 +73,23 @@ function SliderField({ label, value, min, max, unit, onChange, color = C.primary
   );
 }
 
-
 export default function App() {
   const [sessions, setSessions] = useState([]);
   
   useEffect(() => {
-  const fetchSessions = async () => {
-    const { data, error } = await supabase
-      .from("sesiones")
-      .select("*")
-      .order("created_at", { ascending: true });
+    const fetchSessions = async () => {
+      const { data, error } = await supabase
+        .from("sesiones")
+        .select("*")
+        .order("created_at", { ascending: true });
 
-    if (!error) {
-      setSessions(data || []);
-    }
-  };
+      if (!error) {
+        setSessions(data || []);
+      }
+    };
 
-  fetchSessions();
-}, []);
+    fetchSessions();
+  }, []);
 
   const [step, setStep] = useState("home");
   const [form, setForm] = useState({
@@ -115,46 +111,39 @@ export default function App() {
     ...f, [field]: f[field].includes(id) ? f[field].filter(s => s !== id) : [...f[field], id]
   }));
 
-const handleSubmit = async () => {
-  const now = new Date();
+  const handleSubmit = async () => {
+    const now = new Date();
 
-  const session = {
-    paciente: "Ana Gómez",
+    const session = {
+      paciente: "Ana Gómez",
+      fecha: now.toISOString().split("T")[0],
+      hora: now.toTimeString().slice(0, 5),
+      mano: form.mano,
+      frecuencia_hz: form.frecuencia_hz,
+      intensidad_ma: form.intensidad_ma,
+      duracion_min: form.duracion_min,
+      dolor_eva_antes: form.dolor_eva_antes,
+      dolor_eva_despues: form.dolor_eva_despues,
+      sintomas_antes: form.sintomas_antes,
+      sintomas_despues: form.sintomas_despues,
+      puntos_usados: form.puntos_usados,
+      efecto_adverso: form.efecto_adverso,
+      notas: form.notas
+    };
 
-    fecha: now.toISOString().split("T")[0],
-    hora: now.toTimeString().slice(0, 5),
+    const { error } = await supabase
+      .from("sesiones")
+      .insert([session]);
 
-    mano: form.mano,
+    if (error) {
+      console.error(error);
+      alert("Error enviando la sesión");
+      return;
+    }
 
-    frecuencia_hz: form.frecuencia_hz,
-    intensidad_ma: form.intensidad_ma,
-    duracion_min: form.duracion_min,
-
-    dolor_eva_antes: form.dolor_eva_antes,
-    dolor_eva_despues: form.dolor_eva_despues,
-
-    sintomas_antes: form.sintomas_antes,
-    sintomas_despues: form.sintomas_despues,
-
-    puntos_usados: form.puntos_usados,
-
-    efecto_adverso: form.efecto_adverso,
-    notas: form.notas
+    alert("Sesión enviada correctamente");
+    setStep("done");
   };
-
-  const { error } = await supabase
-    .from("sesiones")
-    .insert([session]);
-
-  if (error) {
-    console.error(error);
-    alert("Error enviando la sesión");
-    return;
-  }
-
-  alert("Sesión enviada correctamente");
-  setStep("done");
-};
 
   const resetForm = () => {
     setForm({ mano: "Derecha", puntos_usados: ["PC7","PC6","IG4"], frecuencia_hz: 2, intensidad_ma: 3, duracion_min: 20, dolor_eva_antes: 5, dolor_eva_despues: 3, sintomas_antes: [], sintomas_despues: [], efecto_adverso: "Ninguno", notas: "" });
@@ -208,7 +197,6 @@ const handleSubmit = async () => {
 
         <Card>
           <SectionTitle icon="🔮">Puntos Qi aplicados</SectionTitle>
-          <HandDiagram selectedPoints={form.puntos_usados} />
           <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
             {PUNTOS_QI.map(p => (
               <button key={p.codigo} onClick={() => togglePunto(p.codigo)} style={{
