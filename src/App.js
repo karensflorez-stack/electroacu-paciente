@@ -198,7 +198,7 @@ export default function App() {
         <Card>
           <SectionTitle icon="🔮">Puntos Qi aplicados</SectionTitle>
           <img 
-            src="https://wipjjksphouirpvydgnu.supabase.co/storage/v1/object/public/imagenes/puntos.JPG" 
+            src="https://supabase.com/dashboard/project/wipjjksphouirpvydgnu/storage/files/buckets/imagenes?preview=puntos.JPG" 
             alt="Puntos de tratamiento" 
             style={{ width: "100%", maxHeight: 260, objectFit: "contain", borderRadius: 8, display: "block", margin: "0 auto" }} 
           />  
