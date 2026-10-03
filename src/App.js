@@ -23,7 +23,7 @@ const PUNTOS_QI = [
 ];
 
 const SINTOMAS_STC = [
-  { id: "parestesia_nocturna", label: "Parestesias nocturnas", icon: "🌙" },
+  { id: "parestesia_nocturna", label: "Parestesias nocturnas.", icon: "🌙" },
   { id: "adormecimiento_dedos", label: "Adormecimiento de dedos (pulgar, índice, medio)", icon: "🖐" },
   { id: "dolor_muneca", label: "Dolor en muñeca", icon: "🤚" },
   { id: "dolor_irradiado", label: "Dolor irradiado al antebrazo", icon: "💪" },
